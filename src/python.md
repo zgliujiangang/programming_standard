@@ -37,18 +37,20 @@
     1.子语句块缩进4个空格而非1个tab
     2.语句过长应换行，超过80个字符，建议换行，超过100个字符必须换行
     3.字符串换行：
-    ```python
-        logger.warning('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-                       'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    ```
+```python
+    logger.warning('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+                   'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+```
     4.参数换行：
-    ```python
-        urllib2.urlopen('http://www.google.com',
-                        data='aaaaaaaaaaaaaaaaaaaaa',
-                        headers={},
-                        cookies={})
-    ```
+```python
+    urllib2.urlopen('http://www.google.com',
+                    data='aaaaaaaaaaaaaaaaaaaaa',
+                    headers={},
+                    cookies={})
+```
     5.尽量在代码顶部import, 第三方模块与自己的模块之间空一行
     6.函数与函数、类与函数、类与类之间空两行
     7.类子方法以及变量之间空一行
     8.方法内分组的语句块之间建议空一行
+## 注释级别
+## 单元测试
