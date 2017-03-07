@@ -52,5 +52,54 @@
     6.函数与函数、类与函数、类与类之间空两行
     7.类子方法以及变量之间空一行
     8.方法内分组的语句块之间建议空一行
-## 注释级别
+    9.代码结束后空一行
+## 输入校验
+    1.校验数据是否为空
+    2.校验数据类型是否正确
+    3.校验数据边界是否正确
+## 异常捕获
+    1.应考虑代码可能的出错情况，进行异常捕获
+```python
+    try:
+        dog = dog[0]
+    except IndexError:
+        dog = None
+        # or add the error to log file
+```
+    2.需进行异常捕获的代码越短越好, 因为构造异常捕获的上下文需要额外的开销
+```python
+    # bad
+    try:
+        dog = dog[0]
+        dog.run()
+    except IndexError:
+        logger.warning('Dog index error')
+        raise
+    # good
+    try:
+        dog = dog[0]
+    except IndexError:
+        logger.warning('Dog index error')
+        raise
+    dog.run()
+```
+    3.尽量避免对任何异常都进行捕获的代码
+```python
+    # bad
+    try:
+        do_something()
+        # ...
+    except Exception as e:
+        logger.error(str(e))
+        raise
+```
+    4.捕获异常后，应有正确的应对策略，而不是一味的raise，比如用户输错了页数：
+```python
+    try:
+        page = int(page)
+    except (ValueError, TypeError):
+        page = 1
+```
+## 日志记录
+## 文档注释
 ## 单元测试
