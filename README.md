@@ -1,1 +1,2 @@
-# programming_standard
+# Programming Standard
+## 与君共勉
