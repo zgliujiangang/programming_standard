@@ -63,7 +63,7 @@
     try:
         dog = dog[0]
     except IndexError:
-        dog = None
+        dog = Dog()
         # or add the error to log file
 ```
     2.需进行异常捕获的代码越短越好, 因为构造异常捕获的上下文需要额外的开销
