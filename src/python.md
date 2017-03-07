@@ -19,5 +19,17 @@
   car = Car()
   car.run()  # good
 ```
-    7.变量名应尽量见名思意，不当例子：xx、item，恰当例子：weigth、price
-  
+    7.变量名应尽量见名思意，不当例子：xx、item，恰当例子：weigth、price
+    8.变量声明时应考虑其作用域，避免污染全局作用域
+```python
+    car = Car()
+    road = Road()
+    def run():
+        car.run_at(road)
+    run()  # bad
+    def run():
+        car = Car()
+        road = Road()
+        car.run_at(road)
+    run()  # good
+```
