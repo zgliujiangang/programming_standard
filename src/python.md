@@ -53,10 +53,10 @@
     7.类子方法以及变量之间空一行
     8.方法内分组的语句块之间建议空一行
     9.代码结束后空一行
-## 输入校验
-    1.校验数据是否为空
-    2.校验数据类型是否正确
-    3.校验数据边界是否正确
+## 输入检验
+    1.检验数据是否为空
+    2.检验数据类型是否正确
+    3.检验数据边界是否正确
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
 ```python
@@ -74,8 +74,8 @@
         dog.run()
     except IndexError:
         logger.warning('Dog index error')
-        dog = Dog()
-    # good
+        raise
+    # good
     try:
         dog = dog[0]
     except IndexError:
