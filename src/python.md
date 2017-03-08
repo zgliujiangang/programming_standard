@@ -56,7 +56,8 @@
     for cat in cats:
         pass  # good
 ```
-    8.变量声明时应考虑其作用域，避免污染全局作用域
+## 作用域
+    1.变量声明时应考虑其作用域，避免污染全局作用域
 ```python
     car = Car()
     road = Road()
@@ -68,6 +69,31 @@
         road = Road()
         car.run_at(road)
     run()  # good
+```
+    2.嵌套的函数，内部函数可使用外部的变量，但不能对其赋值，否则NameError
+```python
+    # error
+    def sum(x):
+        def _sum(y):
+           x = x
+           return x + y
+       return _sum
+    # good
+    def sum(x):
+        def _sum(y):
+           return x + y
+       return _sum
+```
+    3.支持在类或函数内部定义类以及函数
+```python
+    class MyClass(object):
+    
+        class SubClass:
+            pass
+    
+    def my_function():
+        class MyClass:
+            pass
 ```
 ## 缩进与换行
     1.子语句块缩进4个空格而非1个tab
@@ -88,12 +114,13 @@
 ```python
     # coding: utf-8
     import time
+    import django
     
     from my_module import my_class
 ```
     6.函数与函数、类与函数、类与类之间空两行
 ```python
-    class MyClass:
+    class MyClass(object):
         pass
         
         
@@ -102,7 +129,7 @@
 ```
     7.类子方法以及变量之间空一行
 ```python
-    class MyClass:
+    class MyClass(object):
         
         def __init__(self):
             pass
@@ -121,7 +148,6 @@
         sheep.bleat()
         sheep.run()
 ```
-    9.代码结束后空一行
 ## 输入检验(仅针对用户的输入数据)
     1.检验数据是否为空
 ```python
@@ -148,10 +174,27 @@
     def devision(n):
         return 10 / n  # bad
     def devision(n):
-        if type(n) == int and n !=0 :
+        if type(n) == int and n != 0 :
             raise
         else:
             return 10 / n  # good
+```
+## 布尔变量
+    1.尽可能使用隐式的false
+```python
+    if foo != []:  # bad
+    if foo:  # good
+```
+    2.不要将一个布尔变量用==与false比较，使用if not:
+```python
+    if x == false:  # bad
+    if not x:  # good
+```
+    3.整数变量尽量不与布尔值比较
+```python
+    x = 1
+    if x == false:  # bad
+    if x == 0:  # good 
 ```
 ## 模块导入
     1.尽量仅对包和模块使用导入
@@ -217,10 +260,40 @@
     except (ValueError, TypeError):
         page = 1
 ```
+## 杂项
+    1.文件或socket操作完成时应显示关闭，或者放在上下文中操作
+```python
+    f = open('read.md')  # bad
+    with open('read.md') as f:  # good
+```
+    2.字符串连接时看情况操作
+```python
+    x = '%s%s' % (a, b)  # bad
+    x = a + b  # good
+    x = 'hello,' + a + ' ' + 'b' + ' ' + 'world!'  # bad
+    x = 'hellp,%s %s world!' % (a, b)  # good
+```
+    3.类如果不继承自其它类就应继承自object，新式类的继承使用c3算法，旧式类深度优先
+```python
+    class MyClass:  # bad
+    class MyClass(object):  # good
+```
+    4.可执行脚本被导入时也不应被执行
+```python
+    main()  # bad
+    if __name__ == '__main__':
+        main()
+```
+    5.不要使用分号将两句代码放在一行
+```python
+    reload(sys); sys.path.append('.')  # bad
+    reload(sys)
+    sys.path.append('.')  # good
+```
 ## 代码构建
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
-    2.明确类对外提供的接口，并提供注释
-    3.类不是方法收容所，不要把什么方法都往类里面塞
+    2.明确类对外提供的接口
+    3.类不是方法收容所，不要把什么方法都往类里面塞
     4.类子程序应尽量简短，一个子程序只实现一个小功能
 ## 日志记录
     1.代码执行到异常情况时应有日志记录，以便追踪错误根源
@@ -228,12 +301,11 @@
     3.确定合适的日志格式
     4.用supervisor托管进程时，可使日志写入console，然后在supervisor中配置日志文件
 ## 代码测试
-    1.为自己编写的类写testcase, 并且测试
+    1.为自己编写的类写testcase
     2.对系统对外提供的功能接口进行测试
     3.应注意testcase的错误
-    4.代码持续构建过程中不断跑测试用例
-    5.使用框架时应结合框架提供的测试模块编写测试用例
+    4.使用框架时应结合框架提供的测试模块编写testcase
 ## 文档注释
-    1.声明类时应注明该类的作用
+    1.声明类时应注明该类的作用
     2.声明方法时注明该方法的作用
     3.类对外提供的接口应写注释
