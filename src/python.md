@@ -1,9 +1,39 @@
 # Programming standard for python
 ## 变量声明
-    1.类名单词首字母均大写，如：Person、BaseCache、SubSystem
-    2.类私有成员及私有方法以下划线开头，单词小写，单词与单词之间下划线分隔，如：_animals, _pages
-    3.局部变量以及函数定义，单词均小写，单词与单词之间下划线分隔，如：message, get_message_from_wechat
-    4.常量单词均大写，单词与单词之间以下划线分隔，如：HTTP_METHODS, MALE
+    1.类名单词首字母均大写
+```python
+    class base_cache:
+        # bad
+        pass
+    class BaseCache:
+        # good
+        pass
+```
+    2.类私有成员及私有方法以下划线开头，单词小写，单词与单词之间下划线分隔
+```python如：_animals, _pages
+    class BaseCache:
+        # bad
+        def make_key(self, *args, **kwargs):
+            pass
+    class BaseCache:
+        # good
+        def _make_key(self, *args, **kwargs):
+            pass
+```
+    3.局部变量以及函数定义，单词均小写，单词与单词之间下划线分隔，
+```python
+    def getmessagefromwechat():
+        # bad
+        pass
+    def get_message_from_wechat():
+        # good
+        pass
+```
+    4.常量单词均大写，单词与单词之间以下划线分隔
+```python
+    http_methods = ('get', 'post', 'head', 'option', 'trace', 'put', 'delete')  # bad
+    HTTP_METHODS = ('get', 'post', 'head', 'option', 'trace', 'put', 'delete')  # good
+```
     5.避免出现难以理解的数值，如：
 ```python
   users.filter(sex=1)  # bad
@@ -19,7 +49,13 @@
   car = Car()
   car.run()  # good
 ```
-    7.变量名应尽量见名思意，不当例子：xx、item，恰当例子：weigth、price
+    7.变量名应尽量见名思意
+```python
+    for item in cats:
+        pass  # bad
+    for cat in cats:
+        pass  # good
+```
     8.变量声明时应考虑其作用域，避免污染全局作用域
 ```python
     car = Car()
@@ -49,12 +85,52 @@
                     cookies={})
 ```
     5.尽量在代码顶部import, 第三方模块与自己的模块之间空一行
+```python
+    # coding: utf-8
+    import time
+    
+    from my_module import my_class
+```
     6.函数与函数、类与函数、类与类之间空两行
+```python
+    class MyClass:
+        pass
+        
+        
+    def my_function():
+        pass
+```
     7.类子方法以及变量之间空一行
+```python
+    class MyClass:
+        
+        def __init__(self):
+            pass
+        
+        def func(self):
+            pass
+```
     8.方法内分组的语句块之间建议空一行
+```python
+    def my_function():
+        dog = Dog()
+        dog.bark()
+        dog.run()
+        
+        sheep = Sheep()
+        sheep.bleat()
+        sheep.run()
+```
     9.代码结束后空一行
 ## 输入检验
     1.检验数据是否为空
+```python
+    def my_function(n):
+        if n == None:
+            pass
+        else:
+            pass
+```
     2.检验数据类型是否正确
     3.检验数据边界是否正确
 ## 异常捕获
