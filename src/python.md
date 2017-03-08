@@ -10,7 +10,7 @@
         pass
 ```
     2.类私有成员及私有方法以下划线开头，单词小写，单词与单词之间下划线分隔
-```python如：_animals, _pages
+```python
     class BaseCache:
         # bad
         def make_key(self, *args, **kwargs):
