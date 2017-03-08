@@ -43,9 +43,9 @@
     6.变量应尽量在第一次使用前声明赋值，如：
 ```python
   car = Car()
-  # do other things...
+  do_something()
   car.run()  # bad
-  # do other things
+  do_something()
   car = Car()
   car.run()  # good
 ```
@@ -167,41 +167,51 @@
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
 ```python
+    dog = dogs[0]  # bad
     try:
-        dog = dog[0]
+        dog = dogs[0]
     except IndexError:
-        dog = Dog()
-        # or add the error to log file
+        dog = Dog()  # good
 ```
-    2.需进行异常捕获的代码越短越好, 因为构造异常捕获的上下文需要额外的开销
+    2.需进行异常捕获的代码越短越好
 ```python
     # bad
     try:
-        dog = dog[0]
+        dog = dogs[0]
         dog.run()
     except IndexError:
-        logger.warning('Dog index error')
+        logger.warning('Dogs index error')
         raise
     # good
     try:
-        dog = dog[0]
+        dog = dogs[0]
     except IndexError:
         logger.warning('Dog index error')
         raise
     dog.run()
 ```
-    3.尽量避免对任何异常都进行捕获的代码
+    3.尽量避免对任何异常都进行捕获的代码，因为很有可能隐藏真正的bug
 ```python
     # bad
     try:
-        do_something()
+        data = json.loads(data)
         # ...
     except Exception as e:
-        logger.error(str(e))
-        raise
+        pass
+    # good
+    try:
+        data = json.loads(data)
+    except (ValueError, TypeError):
+        pass
 ```
-    4.捕获异常后，应有正确的应对策略，而不是一味的raise，比如用户输错了页数：
+    4.捕获异常后，应有正确的应对策略，而不是一味的raise，比如用户输错了页数
 ```python
+    # bad
+    try:
+        page = int(page)
+    except (ValueError, TypeError):
+        raise
+    # good
     try:
         page = int(page)
     except (ValueError, TypeError):
