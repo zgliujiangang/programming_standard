@@ -122,17 +122,48 @@
         sheep.run()
 ```
     9.代码结束后空一行
-## 输入检验
+## 输入检验(仅针对用户的输入数据)
     1.检验数据是否为空
 ```python
-    def my_function(n):
+    def devision(n):
+        return 10 / n  # bad
+    def devision(n):
         if n == None:
-            pass
+            raise
         else:
-            pass
+            return 10 / n  # good
 ```
     2.检验数据类型是否正确
+```python
+    def devision(n):
+        return 10 / n  # bad
+    def devision(n):
+        if type(n) == int:
+            raise
+        else:
+            return 10 / n  # good
+```
     3.检验数据边界是否正确
+```python
+    def devision(n):
+        return 10 / n  # bad
+    def devision(n):
+        if type(n) == int and n !=0 :
+            raise
+        else:
+            return 10 / n  # good
+```
+## 模块导入
+    1.尽量仅对包和模块使用导入
+```python
+    from my_package.my_module import my_class  # bad
+    from my_package import my_module  # good
+```
+    2.按包的全路径导入模块。下面两种方式导入的模块有不同的内存空间
+```python
+    import my_module  # bad
+    from my_package import my_module  # good
+```
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
 ```python
