@@ -290,6 +290,23 @@
     reload(sys)
     sys.path.append('.')  # good
 ```
+    6.if条件过多，看是否可以转换成表驱动法
+```python
+    # bad
+    if x = 0:
+        y = '星期一'
+    elif x = 1:
+        y = '星期二'
+        ...
+    else:
+        raise
+    # good
+    weekdays = ['星期一', '星期二', '星期三', ...]
+    if 0 <= y <= 6
+        y = weekdays[x]
+    else:
+        raise
+```
 ## 代码构建
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
