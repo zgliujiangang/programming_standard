@@ -31,8 +31,8 @@
 ```
     4.常量单词均大写，单词与单词之间以下划线分隔
 ```python
-    http_methods = ('get', 'post', 'head', 'option', 'trace', 'put', 'delete')  # bad
-    HTTP_METHODS = ('get', 'post', 'head', 'option', 'trace', 'put', 'delete')  # good
+    http_methods = ('get', 'post', 'head', 'options', 'trace', 'put', 'delete')  # bad
+    HTTP_METHODS = ('get', 'post', 'head', 'options', 'trace', 'put', 'delete')  # good
 ```
     5.避免出现难以理解的数值，如：
 ```python
@@ -292,8 +292,8 @@
 ```
 ## 代码构建
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
-    2.明确类对外提供的接口
-    3.类不是方法收容所，不要把什么方法都往类里面塞
+    2.明确类对外提供的接口
+    3.类不是方法收容所，不要把什么方法都往类里面塞
     4.类子程序应尽量简短，一个子程序只实现一个小功能
 ## 日志记录
     1.代码执行到异常情况时应有日志记录，以便追踪错误根源
