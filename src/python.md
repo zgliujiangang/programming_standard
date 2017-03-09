@@ -227,13 +227,13 @@
 ```python
     from my_package.my_module import my_class  # bad
 
-    from my_package import my_module  # good
+    from my_package import my_module  # good
 ```
     2.按包的全路径导入模块。下面两种方式导入的模块有不同的内存空间
 ```python
     import my_module  # bad
 
-    from my_package import my_module  # good
+    from my_package import my_module  # good
 ```
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
@@ -346,7 +346,8 @@
     5.尽量避免metaclass的黑色魔法
     6.继承时应遵循里氏替换原则
     7.类子程序应尽量简短，一个子程序只实现一个小功能
-    8.不定期review，检查类的规范性
+    8.子程序或方法尽量限制在50行以内
+    9.不定期review，检查类的规范性
 ## 日志记录
     1.代码执行到异常情况时应有日志记录，以便追踪错误根源
 ```python
