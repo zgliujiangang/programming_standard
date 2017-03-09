@@ -144,7 +144,7 @@
     import time
     import django
     
-    from my_module import my_class
+    import my_package
 ```
     6.函数与函数、类与函数、类与类之间空两行
 ```python
