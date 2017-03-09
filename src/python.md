@@ -186,7 +186,7 @@
         return 10 / n  # no
 
     def devision(n):
-        if type(n) == int:
+        if type(n) != int:
             raise
         else:
             return 10 / n  # yes
@@ -286,7 +286,7 @@
         raise
     dog.run()
 ```
-    3.尽量避免对任何异常都进行捕获的代码，因为很有可能隐藏真正的bug
+    3.避免对任何异常都进行捕获的代码，因为很有可能隐藏真正的bug
 ```python
     # no
     try:
@@ -379,7 +379,34 @@
     s = "I'm scared of lint errors."
     s = '"Good!" thought a happy Python reviewer.'
 ```
-## 代码构建
+    10.注意可能发生的内存泄露，交叉引用时一方可使用弱引用weakref
+```python
+    # no
+    class A(object):
+
+        def __init__(self, b):
+            self._b = b
+
+    class B(object):
+
+        def __init__(self, *args, **kwargs):
+            self._a = A(self)
+
+
+    # yes
+    import weakref
+
+    class A(object):
+
+        def __init__(self, b):
+            self._b = b
+
+    class B(object):
+
+        def __init__(self, a):
+            self._a = A(weakref.proxy(self))
+```
+## 类抽象
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
     3.避免创建万能类
