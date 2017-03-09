@@ -89,18 +89,18 @@
         car.run_at(road)
     run()  # good
 ```
-    2.嵌套的函数，内部函数可使用外部的变量，但不能对其赋值，否则NameError
+    2.嵌套的函数，内部函数可使用外部的变量，但不能对其取值同时赋值，否则NameError
 ```python
     # error
     def sum(x):
         def _sum(y):
-            x = 1
+            x = x
             return x + y
         return _sum
     # good
     def sum(x):
         def _sum(y):
-            x[0] = 2
+            x[0] = x[0]
             return x[0] + y
         return _sum
 ```
@@ -197,7 +197,7 @@
         return 10 / n  # bad
 
     def devision(n):
-        if type(n) == int and n != 0 :
+        if type(n) != int or n == 0 :
             raise
         else:
             return 10 / n  # good
@@ -403,7 +403,7 @@
         """
 
         def run(self, road):
-            """使汽车行驶的方法
+            """汽车在某条道路上行驶行驶
 
             提供参数road指明汽车行驶的道路
             """
