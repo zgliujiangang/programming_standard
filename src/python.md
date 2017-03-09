@@ -406,6 +406,54 @@
         def __init__(self, a):
             self._a = A(weakref.proxy(self))
 ```
+    11.在简单的情况下使用列表推导式，复杂情况下不建议
+```python
+    # no
+    result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
+
+    # yes
+    squares = [x * x for x in range(10)]
+```
+    12.单行函数可使用lambda
+```python
+    # no
+    def sum(x, y):
+        return x + y
+
+    # yes
+    sum = lambda x, y: x + y
+```
+    13.可迭代对象数据量较大时请使用生成器
+```python
+    # no for python2
+    for in in range(100000):
+        pass
+
+    # yes
+    for i in xrange(100000):
+        pass
+```
+    14.起无限循环时推荐while 1
+```python
+    # no
+    while True:
+        pass
+
+    # yes
+    while 1:
+        pass
+```
+    15.单行简短函数可使用条件表达式
+```python
+    # no
+    if condition:
+        x = 1
+    else:
+        x = 2
+
+    # yes
+    x = 1 if condition else 2
+```
 ## 类抽象
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
@@ -444,7 +492,8 @@
     3.使用框架时应结合框架提供的测试模块编写testcase
     4.应注意testcase的错误
 ## 文档注释
-    1.声明类时应注明该类的作用
+    1.请使用中文注释
+    2.声明类时应注明该类的作用
 ```python
     class Cache(object):
         """缓存类提供缓存接口
@@ -457,14 +506,14 @@
         def set(self, key, value, ttl):
             pass
 ```
-    2.声明方法时注明该方法的作用
+    3.声明方法时注明该方法的作用
 ```python
     def sum(x, y):
         """累加计算，返回两个参数的累加值
         """
         return x + y
 ```
-    3.类对外提供的接口应写注释
+    4.类对外提供的接口应写注释
 ```
     class Car(object):
         """汽车类，对汽车的抽象
@@ -477,5 +526,5 @@
             """
             pass
 ```
-    4.注释使用三重双引号而非三重单引号
-    5.为临时代码使用TODO注释
+    5.注释使用三重双引号而非三重单引号
+    6.为临时代码使用TODO注释
