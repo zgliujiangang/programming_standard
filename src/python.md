@@ -3,17 +3,17 @@
     1.类名单词首字母均大写
 ```python
     class base_cache:
-        # bad
+        # no
         pass
 
     class BaseCache:
-        # good
+        # yes
         pass
 ```
     2.类私有成员及私有方法以下划线开头，单词小写，单词与单词之间下划线分隔
 ```python
     class BaseCache:
-        # bad
+        # yes
         def make_key(self, *args, **kwargs):
             pass
 
@@ -24,7 +24,7 @@
             pass
 
     class BaseCache:
-        # good
+        # no
         def _make_key(self, *args, **kwargs):
             pass
 
@@ -37,42 +37,42 @@
     3.局部变量以及函数定义，单词均小写，单词与单词之间下划线分隔，
 ```python
     def getmessagefromwechat():
-        # bad
+        # no
         pass
 
     def get_message_from_wechat():
-        # good
+        # yes
         pass
 ```
     4.常量单词均大写，单词与单词之间以下划线分隔
 ```python
-    http_methods = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # bad
-    HTTP_METHODS = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # good
+    http_methods = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # no
+    HTTP_METHODS = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # yes
 ```
     5.避免出现难以理解的数值，如：
 ```python
-    users.filter(sex=1)  # bad
+    users.filter(sex=1)  # no
 
     MALE = 1
-    users.filter(sex=MALE)  # good
+    users.filter(sex=MALE)  # yes
 ```
     6.变量应尽量在第一次使用前声明赋值，如：
 ```python
     car = Car()
     do_something()
-    car.run()  # bad
+    car.run()  # no
 
     do_something()
     car = Car()
-    car.run()  # good
+    car.run()  # yes
 ```
     7.变量名应尽量见名思意
 ```python
     for item in cats:
-        pass  # bad
+        pass  # no
 
     for cat in cats:
-        pass  # good
+        pass  # yes
 ```
 ## 作用域
     1.变量声明时应考虑其作用域，避免污染全局作用域
@@ -81,13 +81,13 @@
     road = Road()
     def run():
         car.run_at(road)
-    run()  # bad
+    run()  # no
 
     def run():
         car = Car()
         road = Road()
         car.run_at(road)
-    run()  # good
+    run()  # yes
 ```
     2.嵌套的函数，内部函数可使用外部的变量，但不能对其取值同时赋值，否则NameError
 ```python
@@ -97,7 +97,7 @@
             x = x
             return x + y
         return _sum
-    # good
+    # yes
     def sum(x):
         def _sum(y):
             x[0] = x[0]
@@ -172,81 +172,105 @@
     1.检验数据是否为空
 ```python
     def devision(n):
-        return 10 / n  # bad
+        return 10 / n  # no
 
     def devision(n):
         if n == None:
             raise
         else:
-            return 10 / n  # good
+            return 10 / n  # yes
 ```
     2.检验数据类型是否正确
 ```python
     def devision(n):
-        return 10 / n  # bad
+        return 10 / n  # no
 
     def devision(n):
         if type(n) == int:
             raise
         else:
-            return 10 / n  # good
+            return 10 / n  # yes
 ```
     3.检验数据边界是否正确
 ```python
     def devision(n):
-        return 10 / n  # bad
+        return 10 / n  # no
 
     def devision(n):
         if type(n) != int or n == 0 :
             raise
         else:
-            return 10 / n  # good
+            return 10 / n  # yes
 ```
 ## 布尔变量
     1.尽可能使用隐式的false
 ```python
-    if foo != []:  # bad
+    if foo != []:  # no
 
-    if foo:  # good
+    if foo:  # yes
 ```
     2.不要将一个布尔变量用==与false比较，使用if not:
 ```python
-    if x == false:  # bad
+    if x == false:  # no
 
-    if not x:  # good
+    if not x:  # yes
 ```
     3.整数变量尽量不与布尔值比较
 ```python
     x = 1
-    if x == false:  # bad
+    if x == false:  # no
 
-    if x == 0:  # good 
+    if x == 0:  # yes
 ```
 ## 模块导入
     1.尽量仅对包和模块使用导入
 ```python
-    from my_package.my_module import my_class  # bad
+    from my_package.my_module import my_class  # yes
 
-    from my_package import my_module  # good
+    from my_package import my_module
+    my_module.my_class  # good
 ```
     2.按包的全路径导入模块。下面两种方式导入的模块有不同的内存空间
 ```python
-    import my_module  # bad
+    import my_module  # no
 
-    from my_package import my_module  # good
+    from my_package import my_module  # yes
+```
+    3.每个导入应独占一行
+```
+    # no
+    import os, sys
+
+    # yes
+    import os
+    import sys
+```
+    4.导入顺序按照 标准库导入、第三方库导入、应用程序指定导入
+```python
+    # no
+    import os
+    import foo
+    import django
+
+    # yes
+    import os
+    import django
+
+    import foo
 ```
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
 ```python
-    dog = dogs[0]  # bad
+    dog = dogs[0]  # no
+
     try:
         dog = dogs[0]
     except IndexError:
-        dog = Dog()  # good
+        dog = Dog()  # yes
 ```
     2.需进行异常捕获的代码越短越好
 ```python
-    # bad
+    # no
     try:
         dog = dogs[0]
         dog.run()
@@ -254,7 +278,7 @@
         logger.warning('Dogs index error')
         raise
 
-    # good
+    # yes
     try:
         dog = dogs[0]
     except IndexError:
@@ -264,13 +288,14 @@
 ```
     3.尽量避免对任何异常都进行捕获的代码，因为很有可能隐藏真正的bug
 ```python
-    # bad
+    # no
     try:
         data = json.loads(data)
         # ...
     except Exception as e:
         pass
-    # good
+
+    # yes
     try:
         data = json.loads(data)
     except (ValueError, TypeError):
@@ -278,50 +303,54 @@
 ```
     4.捕获异常后，应有正确的应对策略，而不是一味的raise，比如用户输错了页数
 ```python
-    # bad
+    # no
     try:
         page = int(page)
     except (ValueError, TypeError):
         raise
-    # good
+
+    # yes
     try:
         page = int(page)
     except (ValueError, TypeError):
         page = 1
 ```
 ## 杂项
-    1.文件或socket操作完成时应显示关闭，或者放在上下文中操作
+    1.文件或socket操作完成时应显示关闭，或者放在上下文中操作，如果对象不支持with，但支持close，使用contextlib.closing()
 ```python
-    f = open('read.md')  # bad
-    with open('read.md') as f:  # good
+    f = open('read.md')  # no
+    with open('read.md') as f:  # yes
+    with contextlib.closing(open('read.md')) as f:  # yes
 ```
     2.字符串连接时看情况操作
 ```python
-    x = '%s%s' % (a, b)  # bad
-    x = a + b  # good
-    x = 'hello,' + a + ' ' + 'b' + ' ' + 'world!'  # bad
-    x = 'hellp,%s %s world!' % (a, b)  # good
+    x = '%s%s' % (a, b)  # no
+    x = a + b  # yes
+    x = 'hello,' + a + ' ' + 'b' + ' ' + 'world!'  # no
+    x = 'hellp,%s %s world!' % (a, b)  # yes
 ```
-    3.类如果不继承自其它类就应继承自object，新式类的继承使用c3算法，旧式类深度优先
+    3.类如果不继承自其它类就应显示的从object继承，新式类的继承使用c3算法，旧式类深度优先
 ```python
-    class MyClass:  # bad
-    class MyClass(object):  # good
+    class MyClass:  # no
+    class MyClass(object):  # yes
 ```
     4.可执行脚本被导入时也不应被执行
 ```python
-    main()  # bad
+    main()  # no
+
     if __name__ == '__main__':
-        main()
+        main()  # yes
 ```
     5.不要使用分号将两句代码放在一行
 ```python
-    reload(sys); sys.path.append('.')  # bad
+    reload(sys); sys.path.append('.')  # no
+
     reload(sys)
-    sys.path.append('.')  # good
+    sys.path.append('.')  # yes
 ```
     6.if条件过多，看是否可以转换成表驱动法
 ```python
-    # bad
+    # no
     if x = 0:
         y = '星期一'
     elif x = 1:
@@ -329,7 +358,7 @@
         ...
     else:
         raise
-    # good
+    # yes
     weekdays = ['星期一', '星期二', '星期三', ...]
     if 0 <= y <= 6
         y = weekdays[x]
@@ -338,6 +367,18 @@
 ```
     7.#!不是模块文件所必须的，仅在作为脚本时加入此行注释
     8.所有模块均以`# -*- coding: utf-8 -*-`开头
+    9.保持使用字符串引号的一致性
+```python
+    # no
+    s = "Why are you hiding your eyes?"
+    s = 'The lint. It burns. It burns us.'
+    s = "Always the great lint. Watching. Watching."
+
+    # yes
+    s = 'Why are you hiding your eyes?'
+    s = "I'm scared of lint errors."
+    s = '"Good!" thought a happy Python reviewer.'
+```
 ## 代码构建
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
@@ -350,13 +391,13 @@
 ## 日志记录
     1.代码执行到异常情况时应有日志记录，以便追踪错误根源
 ```python
-    # bad
+    # no
     try:
         json.loads(data)
     except (ValueError, TypeError):
         pass
 
-    # good
+    # yes
     try:
         json.loads(data)
     except (ValueError, TypeError):
@@ -403,9 +444,11 @@
         """
 
         def run(self, road):
-            """汽车在某条道路上行驶行驶
+            """汽车在某条道路上行驶
 
             提供参数road指明汽车行驶的道路
             """
             pass
 ```
+    4.注释使用三重双引号而非三重单引号
+    5.为临时代码使用TODO注释
