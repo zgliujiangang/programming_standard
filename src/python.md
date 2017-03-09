@@ -5,6 +5,7 @@
     class base_cache:
         # bad
         pass
+
     class BaseCache:
         # good
         pass
@@ -15,9 +16,22 @@
         # bad
         def make_key(self, *args, **kwargs):
             pass
+
+        def get(self, key):
+            pass
+
+        def set(self, key, value, ttl):
+            pass
+
     class BaseCache:
         # good
         def _make_key(self, *args, **kwargs):
+            pass
+
+        def get(self, key):
+            pass
+
+        def set(self, key, value, ttl):
             pass
 ```
     3.局部变量以及函数定义，单词均小写，单词与单词之间下划线分隔，
@@ -25,34 +39,38 @@
     def getmessagefromwechat():
         # bad
         pass
+
     def get_message_from_wechat():
         # good
         pass
 ```
     4.常量单词均大写，单词与单词之间以下划线分隔
 ```python
-    http_methods = ('get', 'post', 'head', 'options', 'trace', 'put', 'delete')  # bad
-    HTTP_METHODS = ('get', 'post', 'head', 'options', 'trace', 'put', 'delete')  # good
+    http_methods = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # bad
+    HTTP_METHODS = ('get', 'post', 'put', 'delete', 'head', 'options', 'trace', 'connect')  # good
 ```
     5.避免出现难以理解的数值，如：
 ```python
-  users.filter(sex=1)  # bad
-  MALE = 1
-  users.filter(sex=MALE)  # good
+    users.filter(sex=1)  # bad
+
+    MALE = 1
+    users.filter(sex=MALE)  # good
 ```
     6.变量应尽量在第一次使用前声明赋值，如：
 ```python
-  car = Car()
-  do_something()
-  car.run()  # bad
-  do_something()
-  car = Car()
-  car.run()  # good
+    car = Car()
+    do_something()
+    car.run()  # bad
+
+    do_something()
+    car = Car()
+    car.run()  # good
 ```
     7.变量名应尽量见名思意
 ```python
     for item in cats:
         pass  # bad
+
     for cat in cats:
         pass  # good
 ```
@@ -64,6 +82,7 @@
     def run():
         car.run_at(road)
     run()  # bad
+
     def run():
         car = Car()
         road = Road()
@@ -73,16 +92,17 @@
     2.嵌套的函数，内部函数可使用外部的变量，但不能对其赋值，否则NameError
 ```python
     # error
-    def sum(x):
+    def sum(x):
         def _sum(y):
-           x = x
-           return x + y
-       return _sum
+            x = 1
+            return x + y
+        return _sum
     # good
     def sum(x):
         def _sum(y):
-           return x + y
-       return _sum
+            x[0] = 2
+            return x[0] + y
+        return _sum
 ```
     3.支持在类或函数内部定义类以及函数
 ```python
@@ -112,7 +132,7 @@
 ```
     5.尽量在代码顶部import, 第三方模块与自己的模块之间空一行
 ```python
-    # coding: utf-8
+    # -*- coding: utf-8 -*-
     import time
     import django
     
@@ -140,19 +160,20 @@
     8.方法内分组的语句块之间建议空一行
 ```python
     def my_function():
-        dog = Dog()
+        dog = Dog()
         dog.bark()
         dog.run()
-        
-        sheep = Sheep()
+
+        sheep = Sheep()
         sheep.bleat()
         sheep.run()
 ```
 ## 输入检验(仅针对用户的输入数据)
     1.检验数据是否为空
 ```python
-    def devision(n):
+    def devision(n):
         return 10 / n  # bad
+
     def devision(n):
         if n == None:
             raise
@@ -161,8 +182,9 @@
 ```
     2.检验数据类型是否正确
 ```python
-    def devision(n):
+    def devision(n):
         return 10 / n  # bad
+
     def devision(n):
         if type(n) == int:
             raise
@@ -171,8 +193,9 @@
 ```
     3.检验数据边界是否正确
 ```python
-    def devision(n):
+    def devision(n):
         return 10 / n  # bad
+
     def devision(n):
         if type(n) == int and n != 0 :
             raise
@@ -183,28 +206,33 @@
     1.尽可能使用隐式的false
 ```python
     if foo != []:  # bad
+
     if foo:  # good
 ```
     2.不要将一个布尔变量用==与false比较，使用if not:
 ```python
     if x == false:  # bad
+
     if not x:  # good
 ```
     3.整数变量尽量不与布尔值比较
 ```python
     x = 1
     if x == false:  # bad
+
     if x == 0:  # good 
 ```
 ## 模块导入
     1.尽量仅对包和模块使用导入
 ```python
     from my_package.my_module import my_class  # bad
+
     from my_package import my_module  # good
 ```
     2.按包的全路径导入模块。下面两种方式导入的模块有不同的内存空间
 ```python
     import my_module  # bad
+
     from my_package import my_module  # good
 ```
 ## 异常捕获
@@ -214,18 +242,19 @@
     try:
         dog = dogs[0]
     except IndexError:
-        dog = Dog()  # good
+        dog = Dog()  # good
 ```
     2.需进行异常捕获的代码越短越好
 ```python
     # bad
     try:
         dog = dogs[0]
-        dog.run()
+        dog.run()
     except IndexError:
         logger.warning('Dogs index error')
-        raise
-    # good
+        raise
+
+    # good
     try:
         dog = dogs[0]
     except IndexError:
@@ -235,8 +264,8 @@
 ```
     3.尽量避免对任何异常都进行捕获的代码，因为很有可能隐藏真正的bug
 ```python
-    # bad
-    try:
+    # bad
+    try:
         data = json.loads(data)
         # ...
     except Exception as e:
@@ -294,35 +323,89 @@
 ```python
     # bad
     if x = 0:
-        y = '星期一'
-    elif x = 1:
-        y = '星期二'
+        y = '星期一'
+    elif x = 1:
+        y = '星期二'
         ...
     else:
         raise
     # good
-    weekdays = ['星期一', '星期二', '星期三', ...]
+    weekdays = ['星期一', '星期二', '星期三', ...]
     if 0 <= y <= 6
         y = weekdays[x]
     else:
         raise
 ```
+    7.#!不是模块文件所必须的，仅在作为脚本时加入此行注释
+    8.所有模块均以`# -*- coding: utf-8 -*-`开头
 ## 代码构建
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
-    3.类不是方法收容所，不要把什么方法都往类里面塞
-    4.类子程序应尽量简短，一个子程序只实现一个小功能
+    3.避免创建万能类
+    4.消除无关紧要的类
+    5.尽量避免metaclass的黑色魔法
+    6.继承时应遵循里氏替换原则
+    7.类子程序应尽量简短，一个子程序只实现一个小功能
+    8.不定期review，检查类的规范性
 ## 日志记录
     1.代码执行到异常情况时应有日志记录，以便追踪错误根源
+```python
+    # bad
+    try:
+        json.loads(data)
+    except (ValueError, TypeError):
+        pass
+
+    # good
+    try:
+        json.loads(data)
+    except (ValueError, TypeError):
+        logger.warning('json loads data value error type error: %s', data)
+        pass
+```
     2.多进程记录日志时应注意是否对同一个日志文件进行写入操作
     3.确定合适的日志格式
+```python 
+    format = ('%(levelname)s %(asctime)s %(module)s '
+             '%(pathname)s [%(lineno)d]: %(message)s')
+```
     4.用supervisor托管进程时，可使日志写入console，然后在supervisor中配置日志文件
 ## 代码测试
     1.为自己编写的类写testcase
-    2.对系统对外提供的功能接口进行测试
-    3.应注意testcase的错误
-    4.使用框架时应结合框架提供的测试模块编写testcase
+    2.为系统对外提供的功能接口写testcase
+    3.使用框架时应结合框架提供的测试模块编写testcase
+    4.应注意testcase的错误
 ## 文档注释
     1.声明类时应注明该类的作用
+```python
+    class Cache(object):
+        """缓存类提供缓存接口
+
+        公有方法为get, set
+        """
+        def get(self, key):
+            pass
+
+        def set(self, key, value, ttl):
+            pass
+```
     2.声明方法时注明该方法的作用
+```python
+    def sum(x, y):
+        """累加计算，返回两个参数的累加值
+        """
+        return x + y
+```
     3.类对外提供的接口应写注释
+```
+    class Car(object):
+        """汽车类，对汽车的抽象
+        """
+
+        def run(self, road):
+            """使汽车行驶的方法
+
+            提供参数road指明汽车行驶的道路
+            """
+            pass
+```
