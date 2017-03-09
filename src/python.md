@@ -51,43 +51,51 @@
 ```
     5.避免出现难以理解的数值，如：
 ```python
-    users.filter(sex=1)  # no
+    # no
+    users.filter(sex=1)
 
+    # yes
     MALE = 1
-    users.filter(sex=MALE)  # yes
+    users.filter(sex=MALE)
 ```
     6.变量应尽量在第一次使用前声明赋值，如：
 ```python
+    # no
     car = Car()
     do_something()
-    car.run()  # no
+    car.run()
 
+    # yes
     do_something()
     car = Car()
-    car.run()  # yes
+    car.run()
 ```
     7.变量名应尽量见名思意
 ```python
+    # no
     for item in cats:
-        pass  # no
+        pass
 
+    # yes
     for cat in cats:
-        pass  # yes
+        pass
 ```
 ## 作用域
     1.变量声明时应考虑其作用域，避免污染全局作用域
 ```python
+    # no
     car = Car()
     road = Road()
     def run():
         car.run_at(road)
-    run()  # no
+    run()
 
+    # yes
     def run():
         car = Car()
         road = Road()
         car.run_at(road)
-    run()  # yes
+    run()
 ```
     2.嵌套的函数，内部函数可使用外部的变量，但不能对其取值同时赋值，否则NameError
 ```python
@@ -171,70 +179,86 @@
 ## 输入检验(仅针对用户的输入数据)
     1.检验数据是否为空
 ```python
+    # no
     def devision(n):
-        return 10 / n  # no
+        return 10 / n
 
+    # yes
     def devision(n):
         if n == None:
             raise
         else:
-            return 10 / n  # yes
+            return 10 / n
 ```
     2.检验数据类型是否正确
 ```python
+    # no
     def devision(n):
-        return 10 / n  # no
+        return 10 / n
 
+    # yes
     def devision(n):
         if type(n) != int:
             raise
         else:
-            return 10 / n  # yes
+            return 10 / n
 ```
     3.检验数据边界是否正确
 ```python
+    # no
     def devision(n):
-        return 10 / n  # no
+        return 10 / n
 
+    # yes
     def devision(n):
         if type(n) != int or n == 0 :
             raise
         else:
-            return 10 / n  # yes
+            return 10 / n
 ```
 ## 布尔变量
     1.尽可能使用隐式的false
 ```python
-    if foo != []:  # no
+    # no
+    if foo != []:
 
-    if foo:  # yes
+    # yes
+    if foo:
 ```
     2.不要将一个布尔变量用==与false比较，使用if not:
 ```python
-    if x == false:  # no
+    # no
+    if x == false:
 
-    if not x:  # yes
+    # yes
+    if not x:
 ```
     3.整数变量尽量不与布尔值比较
 ```python
     x = 1
-    if x == false:  # no
+    # no
+    if x == false:
 
-    if x == 0:  # yes
+    # yes
+    if x == 0:
 ```
 ## 模块导入
     1.尽量仅对包和模块使用导入
 ```python
-    from my_package.my_module import my_class  # yes
+    # no
+    from my_package.my_module import my_class  
 
+    # yes
     from my_package import my_module
-    my_module.my_class  # good
+    my_module.my_class
 ```
     2.按包的全路径导入模块。下面两种方式导入的模块有不同的内存空间
 ```python
-    import my_module  # no
+    # no
+    import my_module
 
-    from my_package import my_module  # yes
+    # yes
+    from my_package import my_module
 ```
     3.每个导入应独占一行
 ```
@@ -261,12 +285,14 @@
 ## 异常捕获
     1.应考虑代码可能的出错情况，进行异常捕获
 ```python
-    dog = dogs[0]  # no
+    # no
+    dog = dogs[0]
 
+    # yes
     try:
         dog = dogs[0]
     except IndexError:
-        dog = Dog()  # yes
+        dog = Dog()
 ```
     2.需进行异常捕获的代码越短越好
 ```python
@@ -314,6 +340,20 @@
         page = int(page)
     except (ValueError, TypeError):
         page = 1
+```
+    5.当捕获异常时，使用as而不要用逗号
+```python
+    # no
+    try:
+        raise Error
+    except Error, error:
+        pass
+
+    # yes
+    try:
+        raise Error
+    except Error as error:
+        pass
 ```
 ## 杂项
     1.文件或socket操作完成时应显示关闭，或者放在上下文中操作，如果对象不支持with，但支持close，使用contextlib.closing()
@@ -454,6 +494,21 @@
     # yes
     x = 1 if condition else 2
 ```
+    16.单个py文件过大应考虑拆分
+    17.模块间尽量避免交叉引用
+    18.默认参数应为不可变类型
+```python
+    # no
+    def f(a, L=[]):
+        L.append(a)
+        return L
+
+    # yes
+    def f(a, L=None):
+        L = L or []
+        L.append(a)
+        return L
+```
 ## 类抽象
     1.核心类的抽象应仔细斟酌，避免不当的设计，必要时先构建UML图以及伪代码编程
     2.明确类对外提供的接口
@@ -528,3 +583,13 @@
 ```
     5.注释使用三重双引号而非三重单引号
     6.为临时代码使用TODO注释
+    7.注释的时候建议加上作者、编写日期、修改日期、修改人等内容
+    8.注释和代码不要写在同一行
+```python
+    # no
+    b = 4 # this is bad
+
+    # yes
+    # this is good
+    a = 3
+```
