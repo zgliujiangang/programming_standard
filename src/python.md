@@ -473,7 +473,7 @@
     for i in xrange(100000):
         pass
 ```
-    14.起无限循环时推荐while 1
+    14.python2中起无限循环时推荐while 1
 ```python
     # no
     while True:
