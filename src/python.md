@@ -139,6 +139,7 @@
         ...
     else:
         raise
+
     # yes
     weekdays = ['星期一', '星期二', '星期三', ...]
     if 0 <= y <= 6
