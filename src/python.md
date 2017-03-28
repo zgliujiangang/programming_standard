@@ -495,7 +495,7 @@
         return x + y
 ```
     5.类对外提供的接口应写注释
-```
+```python
     class Car(object):
         """汽车类，对汽车的抽象
         """
